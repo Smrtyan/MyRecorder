@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.github.pwittchen.swipe.library.rx2.Swipe;
 import com.github.pwittchen.swipe.library.rx2.SwipeListener;
 
@@ -115,12 +116,16 @@ public class MainMenuActivity extends AppCompatActivity {
 
     };
 
+    void init(){
+        initBottomNavigatorAndFragment();
+        initSwipe();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        initBottomNavigatorAndFragment();
-        initSwipe();
+
+        init();
 
     }
 

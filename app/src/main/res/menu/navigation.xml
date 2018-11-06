@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_record"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_recorder_01_01"
         android:title="@string/title_record" />
 
     <item
         android:id="@+id/navigation_recordings"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_file_box_02"
         android:title="@string/title_recordings" />
 
     <!--<item-->
