@@ -19,6 +19,7 @@ public class MainMenuActivity extends AppCompatActivity {
     Fragment mRecordfragment;
     Fragment mRecordingsfragment;
     private Swipe swipe;
+    BottomNavigationView navigation;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -28,7 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     void initBottomNavigatorAndFragment(){
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         android.support.v4.app.FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -49,8 +50,11 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public boolean onSwipedLeft(MotionEvent event) {
                 android.support.v4.app.FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(mRecordingsfragment);
-                fragmentTransaction.show(mRecordfragment);
+                fragmentTransaction.hide(mRecordfragment);
+                fragmentTransaction.show(mRecordingsfragment);
+                //1 means R.id.sub_recordings
+                MenuItem menuItem = navigation.getMenu().getItem(1);
+                menuItem.setChecked(true);
                 fragmentTransaction.commit();
                 return true;
             }
@@ -62,9 +66,12 @@ public class MainMenuActivity extends AppCompatActivity {
 
             @Override
             public boolean onSwipedRight(MotionEvent event) {
-                android.support.v4.app.FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(mRecordfragment);
-                fragmentTransaction.show(mRecordingsfragment);
+                 android.support.v4.app.FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.hide(mRecordingsfragment);
+                fragmentTransaction.show(mRecordfragment);
+                //0 means R.id.sub_record
+                MenuItem menuItem = navigation.getMenu().getItem(0);
+                menuItem.setChecked(true);
                 fragmentTransaction.commit();
                 return true;
             }
