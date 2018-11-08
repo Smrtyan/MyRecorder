@@ -7,11 +7,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".RecordFragment">
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:format="00:00"
+        android:textColor="#008577"
+    android:textSize="40dp"/>
+
 <LinearLayout
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开始" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="wrap_content"
@@ -26,6 +42,14 @@
         app:roundedCorners="true"
         />
 
+
+
+
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="结束" />
 
 </LinearLayout>
 
