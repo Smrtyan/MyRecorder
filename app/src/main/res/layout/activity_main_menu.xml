@@ -29,19 +29,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <fragment
-            android:id="@+id/sub_record"
-            android:name="com.example.test.myrecorder.RecordFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </fragment>
-        <fragment
-            android:id="@+id/sub_recordings"
-            android:name="com.example.test.myrecorder.RecordingsFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="55sp"
+            android:orientation="vertical"
+            >
+            <fragment
+                android:id="@+id/sub_record"
+                android:name="com.example.test.myrecorder.RecordFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </fragment>
+            <fragment
+                android:id="@+id/sub_recordings"
+                android:name="com.example.test.myrecorder.RecordingsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-        </fragment>
+                > </fragment>
+        </LinearLayout>
+
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"

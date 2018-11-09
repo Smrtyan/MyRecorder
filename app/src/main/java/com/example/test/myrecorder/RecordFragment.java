@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import java.io.File;
@@ -20,18 +23,18 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class RecordFragment extends Fragment {
 
     Chronometer chronometer;
     long tickCount = 0;
     boolean isRecording = false;
+    boolean isStarted = false;
     String FILE_SAVED_DIRECTORY;
     private MediaRecorder recorder;
+    String FILENAME;
     public RecordFragment() {
         // Required empty public constructor
     }
@@ -39,9 +42,10 @@ public class RecordFragment extends Fragment {
     String getNamewithTime(){
 
         Date date = Calendar.getInstance().getTime();
-        String name = FILE_SAVED_DIRECTORY+android.text.format.DateFormat.format("yyyy-MM-dd-hh_mm_ss",date).toString()+".m4a";
-        Log.v("mydatestring",  name);
-        return name;
+        String name = android.text.format.DateFormat.format("yyyyMMddhhmmss",date).toString()+String.format("%06d",new Random().nextInt(100000));
+        Log.v("mydatestring", FILE_SAVED_DIRECTORY+ name);
+        FILENAME = name;
+        return FILE_SAVED_DIRECTORY+name;
     }
     void recorderInit(){
         recorder = new MediaRecorder();
@@ -65,6 +69,7 @@ public class RecordFragment extends Fragment {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isStarted = true;
                 if(isRecording) {
                         tickCount = SystemClock.elapsedRealtime() - chronometer.getBase();
                         btn_start.setText("继续");
@@ -97,12 +102,28 @@ public class RecordFragment extends Fragment {
         btn_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recorder.stop();
-                isRecording = false;
-                chronometer.stop();
-                tickCount = 0;
-                btn_start.setText("开始");
+                if(isStarted) {
+                    recorder.stop();
+                    isRecording = false;
+                    chronometer.stop();
+                    recorder.release(); // Now the object cannot be reused
+                    tickCount = 0;
 
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.setStyle(saveFileDialog.STYLE_NO_FRAME, 0);
+                    Bundle args = new Bundle();
+                    args.putString("filename", FILENAME);
+                    String timeArray [] =chronometer.getText().toString().split(":");
+                    int duration = Integer.parseInt(timeArray[0])*60+Integer.parseInt(timeArray[1]);
+                    args.putString("durationSeconds",duration+"");
+                    saveFileDialog.setArguments(args);
+                    saveFileDialog.show(transaction, "save file dialog");
+                    ((MainMenuActivity)getActivity()).updateRecordingFiles();
+                    btn_start.setText("开始");
+                    chronometer.setText("00:00");
+                    isStarted = false;
+                }
             }
         });
     }
@@ -115,11 +136,14 @@ public class RecordFragment extends Fragment {
         if (!file.exists()){
             file.mkdirs();
         }
-getNamewithTime();
+        getNamewithTime();
         TypefaceProvider.registerDefaultIconSets();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_record, container, false);
         btn_init(view);
+
+
+
         return  view;
     }
 

@@ -1,28 +1,31 @@
 package com.example.test.myrecorder;
 
 import android.Manifest;
-import android.app.FragmentTransaction;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.github.pwittchen.swipe.library.rx2.Swipe;
 import com.github.pwittchen.swipe.library.rx2.SwipeListener;
 
 public class MainMenuActivity extends AppCompatActivity {
-    Fragment mRecordfragment;
-    Fragment mRecordingsfragment;
+    private static SimpleDBHelper dbHelper;
+    private static int DB_VERSION = 1;
     private Swipe swipe;
     BottomNavigationView navigation;
+    RecordFragment mRecordfragment;
+    RecordingsFragment mRecordingsfragment;
+
+    public static SQLiteDatabase getDB() {
+        return dbHelper.getWritableDatabase();
+    }
 
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -44,8 +47,8 @@ public class MainMenuActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         android.support.v4.app.FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        mRecordfragment =       getSupportFragmentManager().findFragmentById(R.id.sub_record);
-        mRecordingsfragment =   getSupportFragmentManager().findFragmentById(R.id.sub_recordings);
+        mRecordfragment = (RecordFragment) getSupportFragmentManager().findFragmentById(R.id.sub_record);
+        mRecordingsfragment = (RecordingsFragment) getSupportFragmentManager().findFragmentById(R.id.sub_recordings);
         fragmentTransaction.hide(mRecordingsfragment).commit();
     }
     void initSwipe(){
@@ -161,9 +164,12 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-
+        dbHelper =new SimpleDBHelper(this, DB_VERSION);
         init();
 
+    }
+    void updateRecordingFiles(){
+        mRecordingsfragment.updateListView();
     }
 
 }
