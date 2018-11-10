@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -40,5 +41,12 @@ public class PlayRecordDialog extends DialogFragment {
                 mediaPlayer.stop();
             dismiss();});
         return view;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+      //  Toast.makeText(getActivity(),"detach",Toast.LENGTH_SHORT).show();
+        mediaPlayer.stop();
     }
 }
