@@ -20,6 +20,11 @@ public class PlayRecordDialog extends DialogFragment {
         String savedName = getArguments().getString("savedName");
         MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), Uri.parse("file://" + savedName));
         mediaPlayer.start();
+        view.findViewById(R.id.btn_record_play).setOnClickListener(v->{
+            //TODO to pause or resume
+            
+        });
+        view.findViewById(R.id.btn_record_back).setOnClickListener(v -> {dismiss();});
         return view;
     }
 }

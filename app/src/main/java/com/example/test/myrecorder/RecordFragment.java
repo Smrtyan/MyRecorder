@@ -119,7 +119,6 @@ public class RecordFragment extends Fragment {
                     args.putString("durationSeconds",duration+"");
                     saveFileDialog.setArguments(args);
                     saveFileDialog.show(transaction, "save file dialog");
-                    ((MainMenuActivity)getActivity()).updateRecordingFiles();
                     btn_start.setText("开始");
                     chronometer.setText("00:00");
                     isStarted = false;

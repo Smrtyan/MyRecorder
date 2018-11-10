@@ -14,11 +14,9 @@ import java.util.List;
 
 public class MyFileAdapter  extends ArrayAdapter<MyListViewItem> {
     List<MyListViewItem> object ;
-    Context context;
     public MyFileAdapter(@NonNull Context context,@NonNull List objects) {
         super(context, R.layout.layout_file_item, objects);
         this.object =objects;
-        this.context = context;
     }
 
     @Override
@@ -29,13 +27,14 @@ public class MyFileAdapter  extends ArrayAdapter<MyListViewItem> {
     @NonNull
     @Override
     public View getView(int position,  @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.layout_file_item, null);
         MyListViewItem item = object.get(position);
         ((TextView)view.findViewById(R.id.tv_mp3_name)).setText((item.getDisplayName())+".mp3");
         ((TextView)view.findViewById(R.id.tv_mp3_duration)).setText((item.getDurationSeconds())+" s");
         ((TextView)view.findViewById(R.id.tv_mp3_date)).setText((item.getRecordedDate()));
-        Button button = view.findViewById(R.id.btn_play);
+       // Button button = view.findViewById(R.id.btn_play);
+        ((ViewGroup)view).setTag(item.getDisplayName());
 
         return view;
     }

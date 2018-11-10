@@ -46,33 +46,30 @@ public class RecordingsFragment extends Fragment {
         myFileAdapter = new MyFileAdapter (getActivity(),list);
 
         listView.setAdapter(myFileAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT);
-                db = MainMenuActivity.getDB();
-                String displayName =((MyListViewItem)list.get(position)).getDisplayName();
-                Cursor cursor =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
-                        "displayName = "+displayName.replace(".mp3",""),null,
-                        null,null,null,null);
-                String savedName;
-                if (cursor.moveToFirst()) {
-                    savedName = cursor.getString(cursor.getColumnIndex("savedName"));
-                    Bundle args = new Bundle();
-                    args.putString("savedName",savedName);
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    PlayRecordDialog dialog = new PlayRecordDialog();
-                    dialog.setArguments(args);
-                    dialog.show(transaction,"recorder player dialog");
-                }else {
-                    Toast.makeText(getActivity(),"no music selected",Toast.LENGTH_SHORT);
-
-                }
-                db.close();
+        listView.setOnItemClickListener((parent, v, position, id) -> {
+            Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT);
+            db = MainMenuActivity.getDB();
+            String displayName =((MyListViewItem)list.get(position)).getDisplayName();
+            Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
+                    "displayName = '"+displayName.replace(".mp3","")+"'",null,
+                    null,null,null,null);
+            String savedName;
+            if (cursor1.moveToFirst()) {
+                savedName = cursor1.getString(cursor1.getColumnIndex("savedName"));
+                Bundle args = new Bundle();
+                args.putString("savedName",savedName);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                PlayRecordDialog dialog = new PlayRecordDialog();
+                dialog.setArguments(args);
+                dialog.show(transaction,"recorder player dialog");
+            }else {
+                Toast.makeText(getActivity(),"no music selected",Toast.LENGTH_SHORT);
 
             }
+            db.close();
+
         });
+
         return view;
 
 
@@ -89,7 +86,7 @@ public class RecordingsFragment extends Fragment {
         Cursor cursor =db.query(SimpleDBHelper.MY_RECORD_TABLE, null, "isDeleted = ? ",
                 new String[]{ "0" }, null, null, "recordedDate", "");
         if (cursor.moveToFirst()) {
-
+            list.clear();
             do {
 
                 String displayName = cursor.getString(cursor.getColumnIndex("displayName"));
@@ -99,6 +96,7 @@ public class RecordingsFragment extends Fragment {
             } while (cursor.moveToNext());
             myFileAdapter.notifyDataSetChanged();
             cursor.close();
+
         }
         db.close();
     }

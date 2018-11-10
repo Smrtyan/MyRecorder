@@ -50,6 +50,7 @@ public class SaveFileDialog extends DialogFragment {
             values.put("isDeleted",0);
             db.insert(SimpleDBHelper.MY_RECORD_TABLE,null,values);
             db.close();
+            ((MainMenuActivity)getActivity()).updateRecordingFiles();
             dismiss();
         });
         return view;
