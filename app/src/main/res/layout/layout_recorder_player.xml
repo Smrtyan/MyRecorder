@@ -25,7 +25,7 @@
                 android:id="@+id/btn_record_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="pause" />
+                android:text="PAUSE" />
             <Button
                 android:id="@+id/btn_record_back"
                 android:layout_width="wrap_content"
