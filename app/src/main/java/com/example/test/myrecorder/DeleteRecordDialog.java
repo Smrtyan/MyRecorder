@@ -28,12 +28,13 @@ public class DeleteRecordDialog extends DialogFragment {
             public void onClick(View v) {
                 db = MainMenuActivity.getDB();
                 String savedName = getArguments().getString("savedName");
+                String recordID = getArguments().getString("id");
 //                Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
 //                        "displayName = '"+displayName.replace(".mp3","")+"'",null,
 //                        null,null,null,null);
                 ContentValues contentValues = new ContentValues();
                 contentValues.put("isDeleted","1");
-                db.update(SimpleDBHelper.MY_RECORD_TABLE,contentValues,"savedName = ?",new String[]{ savedName });
+                db.update(SimpleDBHelper.MY_RECORD_TABLE,contentValues,"id = ?",new String[]{ recordID });
                 File fileToBeDeleted = new File(savedName);
                 fileToBeDeleted.delete();
                 ((MainMenuActivity)getActivity()).updateRecordingFiles();

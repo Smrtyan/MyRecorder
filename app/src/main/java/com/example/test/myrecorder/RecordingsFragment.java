@@ -51,7 +51,7 @@ public class RecordingsFragment extends Fragment {
             db = MainMenuActivity.getDB();
             String displayName =((MyListViewItem)list.get(position)).getDisplayName();
             Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
-                    "displayName = '"+displayName.replace(".mp3","")+"'",null,
+                    "displayName = '"+displayName.replace(".mp3","")+"' and isDeleted = 0",null,
                     null,null,null,null);
             String savedName;
             if (cursor1.moveToFirst()) {
@@ -76,13 +76,15 @@ public class RecordingsFragment extends Fragment {
                 db = MainMenuActivity.getDB();
                 String displayName =((MyListViewItem)list.get(position)).getDisplayName();
                 Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
-                        "displayName = '"+displayName.replace(".mp3","")+"'",null,
+                        "displayName = '"+displayName.replace(".mp3","")+"' and isDeleted = 0",null,
                         null,null,null,null);
-                String savedName;
+                String savedName,recordID;
                 if (cursor1.moveToFirst()) {
                     savedName = cursor1.getString(cursor1.getColumnIndex("savedName"));
+                    recordID = cursor1.getString(cursor1.getColumnIndex("id"));
                     Bundle args = new Bundle();
                     args.putString("savedName",savedName);
+                    args.putString("id",recordID);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     DeleteRecordDialog dialog = new DeleteRecordDialog();
                     dialog.setArguments(args);
