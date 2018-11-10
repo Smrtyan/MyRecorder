@@ -21,7 +21,7 @@ import java.util.List;
 
 public class RecordingsFragment extends Fragment {
     List list = new ArrayList<MyListViewItem>();
-    SQLiteDatabase db;
+
     ListView listView;
     MyFileAdapter myFileAdapter;
     public RecordingsFragment() {
@@ -47,7 +47,7 @@ public class RecordingsFragment extends Fragment {
 
         listView.setAdapter(myFileAdapter);
         listView.setOnItemClickListener((parent, v, position, id) -> {
-            Toast.makeText(getActivity(),"click",Toast.LENGTH_SHORT);
+            SQLiteDatabase db;
             db = MainMenuActivity.getDB();
             String displayName =((MyListViewItem)list.get(position)).getDisplayName();
             Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
@@ -63,11 +63,37 @@ public class RecordingsFragment extends Fragment {
                 dialog.setArguments(args);
                 dialog.show(transaction,"recorder player dialog");
             }else {
-                Toast.makeText(getActivity(),"no music selected",Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(),"no file selected",Toast.LENGTH_SHORT);
 
             }
             db.close();
 
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                SQLiteDatabase db;
+                db = MainMenuActivity.getDB();
+                String displayName =((MyListViewItem)list.get(position)).getDisplayName();
+                Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
+                        "displayName = '"+displayName.replace(".mp3","")+"'",null,
+                        null,null,null,null);
+                String savedName;
+                if (cursor1.moveToFirst()) {
+                    savedName = cursor1.getString(cursor1.getColumnIndex("savedName"));
+                    Bundle args = new Bundle();
+                    args.putString("savedName",savedName);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    DeleteRecordDialog dialog = new DeleteRecordDialog();
+                    dialog.setArguments(args);
+                    dialog.show(transaction,"recorder delete dialog");
+                }else {
+                    Toast.makeText(getActivity(),"no file selected",Toast.LENGTH_SHORT).show();
+
+                }
+                db.close();
+                return true;
+            }
         });
 
         return view;
@@ -82,6 +108,7 @@ public class RecordingsFragment extends Fragment {
     }
 
     void updateListView(){
+        SQLiteDatabase db;
         db = MainMenuActivity.getDB();
         Cursor cursor =db.query(SimpleDBHelper.MY_RECORD_TABLE, null, "isDeleted = ? ",
                 new String[]{ "0" }, null, null, "recordedDate", "");

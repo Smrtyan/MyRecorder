@@ -36,6 +36,7 @@ public class SaveFileDialog extends DialogFragment {
         btn_cancel.setOnClickListener(v->{
             File fileToBeDeleted = new File("/sdcard/Android/data/"+getActivity().getPackageName()+"/files/", fileName);
             fileToBeDeleted.delete();
+            ((MainMenuActivity)getActivity()).updateRecordingFiles();
             dismiss();
         });
         btn_save.setOnClickListener(v->{
