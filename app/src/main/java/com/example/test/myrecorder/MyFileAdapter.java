@@ -9,14 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 public class MyFileAdapter  extends ArrayAdapter<MyListViewItem> {
     List<MyListViewItem> object ;
+    Context context;
     public MyFileAdapter(@NonNull Context context,@NonNull List objects) {
         super(context, R.layout.layout_file_item, objects);
         this.object =objects;
+        this.context = context;
     }
 
     @Override
@@ -35,7 +38,12 @@ public class MyFileAdapter  extends ArrayAdapter<MyListViewItem> {
         ((TextView)view.findViewById(R.id.tv_mp3_date)).setText((item.getRecordedDate()));
        // Button button = view.findViewById(R.id.btn_play);
         ((ViewGroup)view).setTag(item.getDisplayName());
-
+        view.findViewById(R.id.imageButton_shareWechat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"share to wechat",Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 }

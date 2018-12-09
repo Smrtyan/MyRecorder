@@ -185,11 +185,14 @@ public class RecordFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_record, container, false);
 
         ll_recorder_control = view.findViewById(R.id.lineagelayout_recorder_controller);
-        imageButton_start_button = view.findViewById(R.id.imageButton_start);
+        imageButton_start_button = new ImageButton(getActivity());
+        imageButton_start_button.setImageResource(R.drawable.play);
+        imageButton_start_button.setBackgroundColor(0xfff);
+
         imageButton_stop_button = new ImageButton(getActivity());
         imageButton_stop_button.setBackgroundColor(0xfff);
         imageButton_stop_button.setImageResource(R.drawable.stop);
-       // ll_recorder_control.addView(imageButton_stop_button);
+        ll_recorder_control.addView(imageButton_start_button);
 
         btn_init(view);
         return  view;
