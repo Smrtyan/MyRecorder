@@ -3,6 +3,7 @@ package com.example.test.myrecorder;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,8 @@ import android.view.MotionEvent;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.github.pwittchen.swipe.library.rx2.Swipe;
 import com.github.pwittchen.swipe.library.rx2.SwipeListener;
+
+import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class MainMenuActivity extends AppCompatActivity {
     private static SimpleDBHelper dbHelper;
@@ -166,6 +169,30 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         dbHelper =new SimpleDBHelper(this, DB_VERSION);
         init();
+        //stop wave loading view
+        WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);
+        mWaveLoadingView.setAnimDuration(0);
+        mWaveLoadingView.pauseAnimation();
+        mWaveLoadingView.resumeAnimation();
+        mWaveLoadingView.cancelAnimation();
+        mWaveLoadingView.startAnimation();
+//        mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE);
+//        mWaveLoadingView.setTopTitle("Top Title");
+//        mWaveLoadingView.setCenterTitleColor(Color.GRAY);
+//        mWaveLoadingView.setBottomTitleSize(18);
+//        mWaveLoadingView.setProgressValue(80);
+//        mWaveLoadingView.setBorderWidth(10);
+//        mWaveLoadingView.setAmplitudeRatio(60);
+//        mWaveLoadingView.setWaveColor(Color.GRAY);
+//        mWaveLoadingView.setBorderColor(Color.GRAY);
+//        mWaveLoadingView.setTopTitleStrokeColor(Color.BLUE);
+//        mWaveLoadingView.setTopTitleStrokeWidth(3);
+
+//        mWaveLoadingView.pauseAnimation();
+//        mWaveLoadingView.resumeAnimation();
+//      /  mWaveLoadingView.cancelAnimation();
+       // mWaveLoadingView.startAnimation();
+
 
     }
     void updateRecordingFiles(){

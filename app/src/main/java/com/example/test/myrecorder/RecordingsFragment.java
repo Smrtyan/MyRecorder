@@ -51,7 +51,7 @@ public class RecordingsFragment extends Fragment {
             db = MainMenuActivity.getDB();
             String displayName =((MyListViewItem)list.get(position)).getDisplayName();
             Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
-                    "displayName = '"+displayName.replace(".mp3","")+"' and isDeleted = 0",null,
+                    "displayName = '"+displayName.replace(".mp3","")+"'",null,
                     null,null,null,null);
             String savedName;
             if (cursor1.moveToFirst()) {
@@ -108,7 +108,6 @@ public class RecordingsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         updateListView();
     }
-
     void updateListView(){
         SQLiteDatabase db;
         db = MainMenuActivity.getDB();

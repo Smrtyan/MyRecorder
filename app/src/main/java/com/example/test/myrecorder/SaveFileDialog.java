@@ -17,6 +17,14 @@ import java.util.Calendar;
 
 public class SaveFileDialog extends DialogFragment {
     SQLiteDatabase db;
+    String fileName;
+
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        File fileToBeDeleted = new File("/sdcard/Android/data/"+getActivity().getPackageName()+"/files/", fileName);
+//        fileToBeDeleted.delete();
+//    }
 
     @Nullable
     @Override
@@ -28,7 +36,7 @@ public class SaveFileDialog extends DialogFragment {
         String name = getArguments().getString("filename");
         if (name== null)name = "";
         String durationSeconds = getArguments().getString("durationSeconds");
-        final String fileName = name;
+        fileName = name;
         EditText editText =view.findViewById(R.id.et_filename_to_save);
         editText.setText(name);
         Button btn_cancel =view.findViewById(R.id.btn_cancel_save);
@@ -36,7 +44,6 @@ public class SaveFileDialog extends DialogFragment {
         btn_cancel.setOnClickListener(v->{
             File fileToBeDeleted = new File("/sdcard/Android/data/"+getActivity().getPackageName()+"/files/", fileName);
             fileToBeDeleted.delete();
-            ((MainMenuActivity)getActivity()).updateRecordingFiles();
             dismiss();
         });
         btn_save.setOnClickListener(v->{

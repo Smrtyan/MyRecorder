@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:descendantFocusability="blocksDescendants"
+    android:paddingLeft="12px"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10sp"
     android:background="@drawable/corners_bg"
+
     android:orientation="horizontal"
 
     android:padding="5sp">
@@ -13,6 +16,7 @@
         android:src="@drawable/record" />
     <LinearLayout
         android:layout_weight="20"
+        android:layout_marginLeft="20px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -21,6 +25,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:id="@+id/tv_mp3_name"
+            android:layout_marginLeft="5px"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="issues.mp3" />
@@ -38,10 +43,12 @@
             android:layout_height="wrap_content"
             android:text="Jan 06 2018 - 5:24" />
     </LinearLayout>
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="#fff"
+        android:src="@drawable/wechat"
         android:focusable="false"
-        android:text="share" />
+        />
 </LinearLayout>

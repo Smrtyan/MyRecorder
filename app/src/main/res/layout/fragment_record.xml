@@ -4,11 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/bootstrap_brand_secondary_border"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".RecordFragment">
-
+    <me.itangqi.waveloadingview.WaveLoadingView
+        android:id="@+id/waveLoadingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:wlv_progressValue="40"
+        app:wlv_round_rectangle="true"
+        app:wlv_shapeType="circle"
+        app:wlv_titleCenter="it sucks' recorder"
+        app:wlv_titleCenterColor="@android:color/white"
+        app:wlv_titleCenterSize="24sp"
+        app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+        app:wlv_titleCenterStrokeWidth="3dp"
+        app:wlv_triangle_direction="north"
+        app:wlv_waveAmplitude="70"
+        app:wlv_waveColor="@color/colorPrimary"/>
     <Chronometer
         android:id="@+id/chronometer"
         android:layout_width="wrap_content"
@@ -19,38 +32,33 @@
     android:textSize="40dp"/>
 
 <LinearLayout
+    android:id="@+id/lineagelayout_recorder_controller"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
+    <ImageButton
+        android:id="@+id/imageButton_start"
         android:layout_height="wrap_content"
-        android:text="开始" />
-
-    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:background="#fff"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_bootstap"
-        android:layout_margin="30sp"
-        android:text="Reccord"
-        app:bootstrapBrand="success"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:showOutline="false"
-        app:roundedCorners="true"
-        />
+        android:src="@drawable/play" />
+    <!--<Button-->
+        <!--android:id="@+id/btn_start"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="开始" />-->
 
 
 
 
-    <Button
-        android:id="@+id/btn_stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="结束" />
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_stop"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="结束" />-->
 
 </LinearLayout>
 
