@@ -1,6 +1,7 @@
 package com.example.test.myrecorder;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -11,19 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class RecordingsFragment extends Fragment {
-    List list = new ArrayList<MyListViewItem>();
-
+    public static Set set = new HashSet<String>();
+    List list = new ArrayList<LocalFileItem>();
     ListView listView;
-    MyFileAdapter myFileAdapter;
+    LocalFileAdapter localFileAdapter;
     public RecordingsFragment() {
         // Required empty public constructor
     }
@@ -43,13 +48,13 @@ public class RecordingsFragment extends Fragment {
 //        });
         listView =view.findViewById(R.id.lv_file_item);
 
-        myFileAdapter = new MyFileAdapter (getActivity(),list);
+        localFileAdapter = new LocalFileAdapter(getActivity(),list);
 
-        listView.setAdapter(myFileAdapter);
+        listView.setAdapter(localFileAdapter);
         listView.setOnItemClickListener((parent, v, position, id) -> {
             SQLiteDatabase db;
             db = MainMenuActivity.getDB();
-            String displayName =((MyListViewItem)list.get(position)).getDisplayName();
+            String displayName =((LocalFileItem)list.get(position)).getDisplayName();
             Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
                     "displayName = '"+displayName.replace(".mp3","")+"'",null,
                     null,null,null,null);
@@ -74,7 +79,7 @@ public class RecordingsFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 SQLiteDatabase db;
                 db = MainMenuActivity.getDB();
-                String displayName =((MyListViewItem)list.get(position)).getDisplayName();
+                String displayName =((LocalFileItem)list.get(position)).getDisplayName();
                 Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
                         "displayName = '"+displayName.replace(".mp3","")+"' and isDeleted = 0",null,
                         null,null,null,null);
@@ -98,6 +103,12 @@ public class RecordingsFragment extends Fragment {
             }
         });
 
+        ImageButton ib_upload = view.findViewById(R.id.ib_upload);
+        ib_upload.setOnClickListener(v->{
+            Intent intent = new Intent(getActivity(),CloudFileActivity.class);
+            startActivity(intent);
+        });
+
         return view;
 
 
@@ -115,15 +126,17 @@ public class RecordingsFragment extends Fragment {
                 new String[]{ "0" }, null, null, "recordedDate", "");
         if (cursor.moveToFirst()) {
             list.clear();
+            set.clear();
             do {
 
                 String displayName = cursor.getString(cursor.getColumnIndex("displayName"));
                 String durationSeconds = cursor.getString(cursor.getColumnIndex("durationSeconds"));
                 String recordedDate = cursor.getString(cursor.getColumnIndex("recordedDate"));
                 String savedName = cursor.getString(cursor.getColumnIndex("savedName"));
-                list.add(new MyListViewItem(savedName,displayName,durationSeconds,recordedDate));
+                list.add(new LocalFileItem(savedName,displayName,durationSeconds,recordedDate));
+                set.add(displayName);
             } while (cursor.moveToNext());
-            myFileAdapter.notifyDataSetChanged();
+            localFileAdapter.notifyDataSetChanged();
             cursor.close();
 
         }

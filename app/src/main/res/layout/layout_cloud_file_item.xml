@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cloud" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20px"
+        android:layout_weight="20"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_mp3_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5px"
+            android:text="issues.mp3"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_mp3_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:03"
+            android:textSize="10sp"
+            android:textStyle="italic" />
+        <TextView
+            android:id="@+id/tv_mp3_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jan 06 2018 - 5:24"
+            android:textSize="10sp" />
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/ib_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#fff"
+      android:clickable="false"
+        android:focusable="false"
+        />
+</LinearLayout>

@@ -19,8 +19,9 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/ib_upload"
                 android:background="#fff"
-                android:src="@drawable/cloud_upload" />
+                android:src="@drawable/cloud_download" />
             <ListView
                 android:id="@+id/lv_file_item"
                 android:layout_width="match_parent"

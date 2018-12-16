@@ -7,10 +7,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.github.pwittchen.swipe.library.rx2.Swipe;
@@ -18,7 +22,7 @@ import com.github.pwittchen.swipe.library.rx2.SwipeListener;
 
 import me.itangqi.waveloadingview.WaveLoadingView;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity{
     private static SimpleDBHelper dbHelper;
     private static int DB_VERSION = 1;
     private Swipe swipe;
@@ -192,6 +196,7 @@ public class MainMenuActivity extends AppCompatActivity {
 //        mWaveLoadingView.resumeAnimation();
 //      /  mWaveLoadingView.cancelAnimation();
        // mWaveLoadingView.startAnimation();
+
 
 
     }

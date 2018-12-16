@@ -1,11 +1,11 @@
 package com.example.test.myrecorder;
 
-public class MyListViewItem {
+public class LocalFileItem {
     private String displayName;
     private String durationSeconds;
     private String recordedDate;
     private String savedName;
-    MyListViewItem(String savedName,String displayName, String durationSeconds, String recordedDate){
+    LocalFileItem(String savedName, String displayName, String durationSeconds, String recordedDate){
         this.displayName = displayName;
         this.durationSeconds = durationSeconds;
         this.recordedDate = recordedDate;
@@ -31,6 +31,6 @@ public class MyListViewItem {
 
     @Override
     public boolean equals( Object obj) {
-        return this.equals(((MyListViewItem)obj));
+        return this.equals(((LocalFileItem)obj));
     }
 }

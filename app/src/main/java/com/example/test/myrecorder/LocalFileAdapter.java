@@ -1,33 +1,22 @@
 package com.example.test.myrecorder;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
-public class MyFileAdapter  extends ArrayAdapter<MyListViewItem> {
-    List<MyListViewItem> object ;
+public class LocalFileAdapter extends ArrayAdapter<LocalFileItem> {
+    List<LocalFileItem> object ;
     Context context;
-    public MyFileAdapter(@NonNull Context context,@NonNull List objects) {
-        super(context, R.layout.layout_file_item, objects);
+    public LocalFileAdapter(@NonNull Context context, @NonNull List objects) {
+        super(context, R.layout.layout_local_file_item, objects);
         this.object =objects;
         this.context = context;
     }
@@ -41,8 +30,8 @@ public class MyFileAdapter  extends ArrayAdapter<MyListViewItem> {
     @Override
     public View getView(int position,  @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.layout_file_item, null);
-        MyListViewItem item = object.get(position);
+        View view = inflater.inflate(R.layout.layout_local_file_item, null);
+        LocalFileItem item = object.get(position);
         ((TextView)view.findViewById(R.id.tv_mp3_name)).setText((item.getDisplayName())+".mp3");
         ((TextView)view.findViewById(R.id.tv_mp3_duration)).setText((item.getDurationSeconds())+" s");
         ((TextView)view.findViewById(R.id.tv_mp3_date)).setText((item.getRecordedDate()));

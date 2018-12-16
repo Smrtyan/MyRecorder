@@ -43,9 +43,7 @@ public class RecordFragment extends Fragment {
     ImageButton imageButton_start_button;
     ImageButton imageButton_stop_button;
     int startButtonResourceId = R.drawable.play;
-    public RecordFragment() {
-        // Required empty public constructor
-    }
+
 
     String getNamewithTime(){
 
@@ -69,7 +67,7 @@ public class RecordFragment extends Fragment {
 //        recorder.release(); // Now the object cannot be reused
     }
     void btn_init(View v){
-        chronometer = (Chronometer) v.findViewById(R.id.chronometer);
+        chronometer =  v.findViewById(R.id.chronometer);
         chronometer.setFormat("%s");
 
 //        final Button btn_start = v.findViewById(R.id.btn_start);
@@ -80,16 +78,17 @@ public class RecordFragment extends Fragment {
 
                 if(isRecording) {
                         tickCount = SystemClock.elapsedRealtime() - chronometer.getBase();
-                      //  btn_start.setText("继续");
                         startButtonResourceId =R.drawable.play;
                         imageButton_start_button.setImageResource(startButtonResourceId);
-                        WaveLoadingView mWaveLoadingView = (WaveLoadingView) getActivity().findViewById(R.id.waveLoadingView);
+
+                        WaveLoadingView mWaveLoadingView = getActivity().findViewById(R.id.waveLoadingView);
                         //stop wave loading view
                         mWaveLoadingView.setAnimDuration(0);
-                    mWaveLoadingView.pauseAnimation();
-                    mWaveLoadingView.resumeAnimation();
-                    mWaveLoadingView.cancelAnimation();
-                    mWaveLoadingView.startAnimation();
+                        mWaveLoadingView.pauseAnimation();
+                        mWaveLoadingView.resumeAnimation();
+                        mWaveLoadingView.cancelAnimation();
+                        mWaveLoadingView.startAnimation();
+
                         recorder.pause();
                         chronometer.stop();
 
@@ -113,13 +112,15 @@ public class RecordFragment extends Fragment {
                        // btn_start.setText("暂停");
                         startButtonResourceId =R.drawable.pause;
                         imageButton_start_button.setImageResource(startButtonResourceId);
+
                         //start view loading view
                         WaveLoadingView mWaveLoadingView = (WaveLoadingView) getActivity().findViewById(R.id.waveLoadingView);
-                        mWaveLoadingView.setAnimDuration(3000);
+                        mWaveLoadingView.setAnimDuration(2000);
                         mWaveLoadingView.pauseAnimation();
                         mWaveLoadingView.resumeAnimation();
                         mWaveLoadingView.cancelAnimation();
                         mWaveLoadingView.startAnimation();
+
                         chronometer.setBase(SystemClock.elapsedRealtime()-tickCount);
                         chronometer.start();
                     } catch (IOException e) {
