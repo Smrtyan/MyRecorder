@@ -64,7 +64,8 @@ public class PlayRecordDialog extends DialogFragment {
         LinearLayout linearLayout = view.findViewById(R.id.ll_control_panel);
 
         btn_play = new ImageButton(getActivity());
-        btn_play.setImageResource(R.drawable.play);
+        btn_play.setBackgroundColor(0xfff);
+        btn_play.setImageResource(R.drawable.pause);
 
         btn_back = new ImageButton(getActivity());
         btn_back.setOnClickListener(v -> {
@@ -72,6 +73,7 @@ public class PlayRecordDialog extends DialogFragment {
                 mediaPlayer.stop();
             dismiss();});
         btn_back.setImageResource(R.drawable.back);
+        btn_back.setBackgroundColor(0xfff);
 
         linearLayout.addView(btn_play);
         linearLayout.addView(btn_back);
@@ -107,12 +109,14 @@ public class PlayRecordDialog extends DialogFragment {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     if (pressPictureFlag == false) {
                         btn_play.setImageResource(R.drawable.play);
+                        btn_play.setBackgroundColor(0xfff);
                         mediaPlayer.pause();
  /*..................
                         功能代码1*/
                         pressPictureFlag = true;
                     } else {
                         btn_play.setImageResource(R.drawable.pause);
+                        btn_play.setBackgroundColor(0xfff);
                         mediaPlayer.start();
 /*..................
                     功能代码2*/

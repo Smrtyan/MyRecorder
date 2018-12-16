@@ -120,7 +120,8 @@ public class RecordingsFragment extends Fragment {
                 String displayName = cursor.getString(cursor.getColumnIndex("displayName"));
                 String durationSeconds = cursor.getString(cursor.getColumnIndex("durationSeconds"));
                 String recordedDate = cursor.getString(cursor.getColumnIndex("recordedDate"));
-                list.add(new MyListViewItem(displayName,durationSeconds,recordedDate));
+                String savedName = cursor.getString(cursor.getColumnIndex("savedName"));
+                list.add(new MyListViewItem(savedName,displayName,durationSeconds,recordedDate));
             } while (cursor.moveToNext());
             myFileAdapter.notifyDataSetChanged();
             cursor.close();

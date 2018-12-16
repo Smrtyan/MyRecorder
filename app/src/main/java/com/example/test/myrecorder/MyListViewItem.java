@@ -4,10 +4,12 @@ public class MyListViewItem {
     private String displayName;
     private String durationSeconds;
     private String recordedDate;
-    MyListViewItem(String displayName, String durationSeconds, String recordedDate){
+    private String savedName;
+    MyListViewItem(String savedName,String displayName, String durationSeconds, String recordedDate){
         this.displayName = displayName;
         this.durationSeconds = durationSeconds;
         this.recordedDate = recordedDate;
+        this.savedName=savedName;
     }
 
     String getDisplayName(){
@@ -18,8 +20,9 @@ public class MyListViewItem {
         return durationSeconds;
     }
 
-    String getRecordedDate(){
-        return recordedDate;
+    String getRecordedDate(){ return recordedDate; }
+    String getSavedName(){
+        return savedName;
     }
 
     public String toString() {
