@@ -221,7 +221,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             JSONObject jsonObject = new JSONObject(result);
                                             if (jsonObject.getString("auth").equals("ok")){
                                                 MainMenuActivity.isLoginIn = true;
-                                                Toast.makeText(LoginActivity.this, jsonObject.getString("token"), Toast.LENGTH_SHORT).show();
+                                               // Toast.makeText(LoginActivity.this, jsonObject.getString("token"), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "验证成功！", Toast.LENGTH_SHORT).show();
                                                 loadCheckBoxState();
                                                 SharedPreferencesUtils helper = new SharedPreferencesUtils(LoginActivity.this, "setting");
                                                 helper.putValues(new SharedPreferencesUtils.ContentValue("token", jsonObject.getString("token")));

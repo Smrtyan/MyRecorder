@@ -15,23 +15,23 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.ByteArrayOutputStream;
 
-public class MyTool {
+public class MyWechatTool {
     private static  String APP_ID = "wx3de2a3ff86d8a045";
-    private static String RequestURL =  "http://139.199.200.239/upload/issues.mp3";
+   // private static String RequestURL =  "http://139.199.200.239/upload/issues.mp3";
 
-    public static  void shareMusic(Context context){
+    public static  void shareMusic(Context context,String URL,String title){
         IWXAPI api = WXAPIFactory.createWXAPI(context,APP_ID,true);
         api.registerApp(APP_ID);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.filebox);
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ghosts);
 
         WXMusicObject musicObject = new WXMusicObject();
-        musicObject.musicUrl = RequestURL;
+        musicObject.musicUrl = URL;
 
         WXMediaMessage msg = new WXMediaMessage();
         msg.mediaObject = musicObject;
-        msg.title = "issues";
-        msg.description = "this is a test";
+        msg.title = title;
+        msg.description = "shared by My dumping recorder app";
 
         //设置缩略图
         Bitmap bmp = Bitmap.createScaledBitmap(bitmap,80,80,true);
@@ -65,7 +65,7 @@ public class MyTool {
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction(text);
         req.message = msg;
-        req.scene = SendMessageToWX.Req.WXSceneSession;
+        req.scene = SendMessageToWX.Req.WXSceneSpecifiedContact;
         api.sendReq(req);
     }
 

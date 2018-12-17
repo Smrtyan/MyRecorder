@@ -2,6 +2,7 @@ package com.example.test.myrecorder;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,50 +52,58 @@ public class LocalFileAdapter extends ArrayAdapter<LocalFileItem> {
         ib_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String POSTURL ="https://smrtyan.cn/upload.php";
+                if(MainMenuActivity.isLoginIn) {
+                    String POSTURL = "https://smrtyan.cn/upload.php";
 
-                //token should load from sharedPreference
-                String token="b6HetDy$+-@2";
+                    //token should load from sharedPreference
+                    //  String token="b6HetDy$+-@2";
+                    SharedPreferencesUtils helper = new SharedPreferencesUtils(context, "setting");
+                    String token = helper.getString("token");
+                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+                    SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = null;
 
-                SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
-                SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = null;
+                    try {
+                        date = simpleDateFormat1.parse(item.getRecordedDate());
+                        final String d = simpleDateFormat2.format(date);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                File file = new File(item.getSavedName());
 
-                try {
-                    date = simpleDateFormat1.parse(item.getRecordedDate());
-                    final String d=simpleDateFormat2.format(date);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            File file = new File(item.getSavedName());
+                                HashMap<String, String> params = new HashMap<>();
+                                params.put("token", token);
+                                params.put("filename", item.getSavedName());
+                                params.put("duration", item.getDurationSeconds());
+                                params.put("recordDate", d);
+                                try {
 
-                            HashMap<String , String> params = new HashMap<>();
-                            params.put("token", token);
-                            params.put("filename", item.getSavedName());
-                            params.put("duration", item.getDurationSeconds());
-                            params.put("recordDate",d );
-                            try {
+                                    final String s = FileUpload.uploadForm(params, "file", file, item.getDisplayName(), POSTURL);
 
-                                final String s =FileUpload.uploadForm(params, "file", file, item.getDisplayName(), POSTURL);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (Exception e) {
-                                e.printStackTrace();
                             }
-
-                        }
-                    }).start();
-                    SQLiteDatabase db;
-                    db = MainMenuActivity.getDB();
-                    ContentValues contentValues = new ContentValues();
-                    contentValues.put("isUploaded","1");
-                    db.update(SimpleDBHelper.MY_RECORD_TABLE,contentValues,"savedName = '"+item.getSavedName()+"'",null);
-                    db.close();
-                    MainMenuActivity.updateRecordingFiles();
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                        }).start();
+                        SQLiteDatabase db;
+                        db = MainMenuActivity.getDB();
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("isUploaded", "1");
+                        db.update(SimpleDBHelper.MY_RECORD_TABLE, contentValues, "savedName = '" + item.getSavedName() + "'", null);
+                        db.close();
+                        MainMenuActivity.updateRecordingFiles();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    context.startActivity(intent);
                 }
+
+
             }
         });
         Log.v("upldt",""+item.getDisplayName()+","+item.getIsUploaded());
@@ -112,9 +121,23 @@ public class LocalFileAdapter extends ArrayAdapter<LocalFileItem> {
             @Override
             public void onClick(View v) {
 
+                    SharedPreferencesUtils helper = new SharedPreferencesUtils(context, "setting");
+                    String token = helper.getString("token");
+                    // String name = helper.getString("name");
+                    String POSTURL = "https://smrtyan.cn/share.php" + "?" + "filename=" + item.getDisplayName() + "&token=" + token;
+                    Log.v("POSTURL", POSTURL);
 
+                    if(MainMenuActivity.isLoginIn&&item.getIsUploaded()==1) {
+                        MyWechatTool.shareMusic(context, POSTURL, item.getDisplayName());
+                        Log.v("POSTURL", ""+MainMenuActivity.isLoginIn+"**"+item.getIsUploaded());
+                    }else if(!MainMenuActivity.isLoginIn){
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+                }else {
+                    Toast.makeText(context,"You have to upload file first!",Toast.LENGTH_SHORT).show();;
+                }
 
-                   Toast.makeText(context,"share to wechat",Toast.LENGTH_SHORT).show();
+                  // Toast.makeText(context,"share to wechat",Toast.LENGTH_SHORT).show();
             }
         });
         return view;

@@ -42,8 +42,8 @@ public class RecordingsFragment extends Fragment {
 //        btn_share.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                MyTool.shareMusic(getActivity());
-//               // MyTool.shareText(getActivity(),"hello");
+//                MyWechatTool.shareMusic(getActivity());
+//               // MyWechatTool.shareText(getActivity(),"hello");
 //            }
 //        });
         listView =view.findViewById(R.id.lv_file_item);
@@ -58,11 +58,13 @@ public class RecordingsFragment extends Fragment {
             Cursor cursor1 =db.query(SimpleDBHelper.MY_RECORD_TABLE,null,
                     "displayName = '"+displayName.replace(".mp3","")+"'",null,
                     null,null,null,null);
-            String savedName;
+            String savedName,name;
             if (cursor1.moveToFirst()) {
                 savedName = cursor1.getString(cursor1.getColumnIndex("savedName"));
+                name = cursor1.getString(cursor1.getColumnIndex("displayName"));
                 Bundle args = new Bundle();
                 args.putString("savedName",savedName);
+                args.putString("name",name);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 PlayRecordDialog dialog = new PlayRecordDialog();
                 dialog.setArguments(args);
