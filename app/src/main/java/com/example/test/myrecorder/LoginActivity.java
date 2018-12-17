@@ -220,12 +220,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         try {
                                             JSONObject jsonObject = new JSONObject(result);
                                             if (jsonObject.getString("auth").equals("ok")){
+                                                MainMenuActivity.isLoginIn = true;
                                                 Toast.makeText(LoginActivity.this, jsonObject.getString("token"), Toast.LENGTH_SHORT).show();
                                                 loadCheckBoxState();
-//
-//                                                Intent intent = new Intent(LoginActivity.this,CloudFileActivity.class);
-//                                                startActivity(intent);
+                                                SharedPreferencesUtils helper = new SharedPreferencesUtils(LoginActivity.this, "setting");
+                                                helper.putValues(new SharedPreferencesUtils.ContentValue("token", jsonObject.getString("token")));
+                                                if (MainMenuActivity.isLoginIn) {
+                                                    Intent intent = new Intent(LoginActivity.this, CloudFileActivity.class);
+                                                    startActivity(intent);
+                                                }
                                                 finish();
+                                            }else {
+
+                                                Toast.makeText(LoginActivity.this, "账号或密码不正确", Toast.LENGTH_SHORT).show();
                                             }
                                         } catch (JSONException e1) {
                                             e1.printStackTrace();

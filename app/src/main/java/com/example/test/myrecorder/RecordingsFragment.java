@@ -104,9 +104,15 @@ public class RecordingsFragment extends Fragment {
         });
 
         ImageButton ib_upload = view.findViewById(R.id.ib_upload);
-        ib_upload.setOnClickListener(v->{
-            Intent intent = new Intent(getActivity(),CloudFileActivity.class);
-            startActivity(intent);
+        ib_upload.setOnClickListener(v-> {
+            if (!MainMenuActivity.isLoginIn) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+            if (MainMenuActivity.isLoginIn) {
+                Intent intent = new Intent(getActivity(), CloudFileActivity.class);
+                startActivity(intent);
+             }
         });
 
         return view;
@@ -133,7 +139,8 @@ public class RecordingsFragment extends Fragment {
                 String durationSeconds = cursor.getString(cursor.getColumnIndex("durationSeconds"));
                 String recordedDate = cursor.getString(cursor.getColumnIndex("recordedDate"));
                 String savedName = cursor.getString(cursor.getColumnIndex("savedName"));
-                list.add(new LocalFileItem(savedName,displayName,durationSeconds,recordedDate));
+                int isUploaded = cursor.getInt(cursor.getColumnIndex("isUploaded"));
+                list.add(new LocalFileItem(savedName,displayName,durationSeconds,recordedDate,isUploaded));
                 set.add(displayName);
             } while (cursor.moveToNext());
             localFileAdapter.notifyDataSetChanged();

@@ -44,6 +44,11 @@
             android:text="Jan 06 2018 - 5:24" />
     </LinearLayout>
     <ImageButton
+        android:id="@+id/ib_upload"
+        android:clickable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageButton
         android:id="@+id/imageButton_shareWechat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

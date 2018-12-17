@@ -4,7 +4,7 @@ public class CloudFileItem {
     private String displayName;
     private String durationSeconds;
     private String recordedDate;
-    private  Boolean isDownloaded;
+    Boolean isDownloaded;
     CloudFileItem(String displayName, String durationSeconds, String recordedDate,Boolean isDownloaded){
         this.displayName = displayName;
         this.durationSeconds = durationSeconds;

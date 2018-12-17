@@ -5,11 +5,14 @@ public class LocalFileItem {
     private String durationSeconds;
     private String recordedDate;
     private String savedName;
-    LocalFileItem(String savedName, String displayName, String durationSeconds, String recordedDate){
+
+    private int isUploaded;
+    LocalFileItem(String savedName,String displayName, String durationSeconds, String recordedDate,int isUploaded){
         this.displayName = displayName;
         this.durationSeconds = durationSeconds;
         this.recordedDate = recordedDate;
         this.savedName=savedName;
+        this.isUploaded = isUploaded;
     }
 
     String getDisplayName(){
@@ -24,6 +27,7 @@ public class LocalFileItem {
     String getSavedName(){
         return savedName;
     }
+    int getIsUploaded(){return  isUploaded; }
 
     public String toString() {
         return displayName;

@@ -27,8 +27,9 @@ public class MainMenuActivity extends AppCompatActivity{
     private static int DB_VERSION = 1;
     private Swipe swipe;
     BottomNavigationView navigation;
-    RecordFragment mRecordfragment;
-    RecordingsFragment mRecordingsfragment;
+    static RecordFragment mRecordfragment;
+    static RecordingsFragment mRecordingsfragment;
+    static Boolean isLoginIn = false;
 
     public static SQLiteDatabase getDB() {
         return dbHelper.getWritableDatabase();
@@ -171,6 +172,10 @@ public class MainMenuActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        SharedPreferencesUtils helper = new SharedPreferencesUtils(this, "setting");
+         isLoginIn = helper.getBoolean("isLoginIn", false);
+
         dbHelper =new SimpleDBHelper(this, DB_VERSION);
         init();
         //stop wave loading view
@@ -200,7 +205,17 @@ public class MainMenuActivity extends AppCompatActivity{
 
 
     }
-    void updateRecordingFiles(){
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferencesUtils helper = new SharedPreferencesUtils(this, "setting");
+        helper.putValues(new SharedPreferencesUtils.ContentValue("isLoginIn", isLoginIn));
+
+
+    }
+
+    static void updateRecordingFiles(){
         mRecordingsfragment.updateListView();
     }
 
