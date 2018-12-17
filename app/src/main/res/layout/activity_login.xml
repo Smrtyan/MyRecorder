@@ -150,6 +150,7 @@
         android:paddingTop="@dimen/margin_small"
         android:paddingBottom="@dimen/margin_small"
         android:text="login"
+        android:background="#000"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_normal"/>
 
