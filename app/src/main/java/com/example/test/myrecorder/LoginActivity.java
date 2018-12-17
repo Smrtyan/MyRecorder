@@ -225,6 +225,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 Toast.makeText(LoginActivity.this, "验证成功！", Toast.LENGTH_SHORT).show();
                                                 loadCheckBoxState();
                                                 SharedPreferencesUtils helper = new SharedPreferencesUtils(LoginActivity.this, "setting");
+                                                helper.putValues(new SharedPreferencesUtils.ContentValue("name", et_name.getText().toString()));
+                                                helper.putValues(new SharedPreferencesUtils.ContentValue("isLoginIn", MainMenuActivity.isLoginIn));
                                                 helper.putValues(new SharedPreferencesUtils.ContentValue("token", jsonObject.getString("token")));
                                                 if (MainMenuActivity.isLoginIn) {
                                                     Intent intent = new Intent(LoginActivity.this, CloudFileActivity.class);
@@ -329,7 +331,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             helper.putValues(
                     new SharedPreferencesUtils.ContentValue("remenberPassword", true),
                     new SharedPreferencesUtils.ContentValue("autoLogin", true),
-                    new SharedPreferencesUtils.ContentValue("password", md5(getPassword())));
+                    new SharedPreferencesUtils.ContentValue("password", getPassword()));
             //Base64Utils.encryptBASE64(getPassword())
         } else if (!checkBox_password.isChecked()) { //如果没有保存密码，那么自动登录也是不选的
             //创建记住密码和自动登录是默认不选,密码为空
@@ -342,7 +344,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             helper.putValues(
                     new SharedPreferencesUtils.ContentValue("remenberPassword", true),
                     new SharedPreferencesUtils.ContentValue("autoLogin", false),
-                    new SharedPreferencesUtils.ContentValue("password", md5(getPassword())));
+                    new SharedPreferencesUtils.ContentValue("password", getPassword()));
         }
     }
 

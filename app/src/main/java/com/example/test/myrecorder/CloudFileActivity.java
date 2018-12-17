@@ -35,7 +35,7 @@ public class CloudFileActivity extends AppCompatActivity {
         tv_username.setText(name);
 
         String URL = "https://smrtyan.cn/list.php?name="+name+"&token="+token;
-        Log.v("upldt1",URL);
+       // Log.v("upldt1",URL);
         Ion.with(this)
                 .load(URL)
                 .asString()
@@ -61,7 +61,7 @@ public class CloudFileActivity extends AppCompatActivity {
                                 Log.v("CFA",""+obj.getString("filename"));
                             }
                             updateListView();
-                            Log.v("CFA",""+jsonArray.length());
+                        //    Log.v("CFA",""+jsonArray.length());
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -79,6 +79,9 @@ public class CloudFileActivity extends AppCompatActivity {
     public void btn_logout(View view) {
         MainMenuActivity.isLoginIn = false;
         Toast.makeText(this,"Log out!",Toast.LENGTH_LONG).show();
+        SharedPreferencesUtils helper = new SharedPreferencesUtils(this, "setting");
+        helper.putValues(new SharedPreferencesUtils.ContentValue("autoLogin", false));
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
