@@ -1,4 +1,4 @@
-# MyRecorder -- big homework of my android course (unfinished)
+# MyRecorder -- big homework of my android course 
 
 ## feature 
 - can record
